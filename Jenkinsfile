@@ -101,8 +101,8 @@ pipeline{
                 steps{
                     script{ 
                         sh 'docker image build -t $JOB_NAME:v1.$BUILD_ID .'
-                        sh 'docker image -t $JOB_NAME:v1.$BUILD_ID raviteja2/$JOB_NAME:v1.$BUILD_ID'
-                        sh 'docker image -t $JOB_NAME:v1.$BUILD_ID raviteja2/$JOB_NAME:latest'
+                        sh 'docker image --tag $JOB_NAME:v1.$BUILD_ID raviteja2/$JOB_NAME:v1.$BUILD_ID'
+                        sh 'docker image --tag $JOB_NAME:v1.$BUILD_ID raviteja2/$JOB_NAME:latest'
                     }
                 }
                 
