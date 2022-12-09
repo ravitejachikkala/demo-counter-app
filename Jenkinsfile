@@ -67,12 +67,15 @@ pipeline{
                     script{
                         
                         waitForQualityGate abortPipeline: false, credentialsId: 'sonar-api'
+                        
                     }
                 }
             }
             stage('upload war file to nexus'){
                 steps{
                     script{
+                        def readPomVersion = readPomVersion file: 'pom.xml'
+                        def nexusRepo = readMavenPom.version.endsWith("SNAPSHOT") ? "Nexus-SNAPSHOT" : "Nexus-App-Release"
                         nexusArtifactUploader artifacts:
                             [
                                 [
@@ -86,8 +89,8 @@ pipeline{
                             nexusUrl: '13.233.83.240:8081',
                             nexusVersion: 'nexus3',
                             protocol: 'http',
-                            repository: 'Nexus-App-Release',
-                            version: '1.0.0'
+                            repository: 'nexusRepo',
+                            version: "${readPomVersion.version}"
                     }
                 }
             }      
