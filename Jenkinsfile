@@ -88,5 +88,7 @@ pipeline{
                             protocol: 'http',
                             repository: 'Nexus-App-Release',
                             version: '1.0.0'
-        
+                    }
+                }
+            }      
 }
