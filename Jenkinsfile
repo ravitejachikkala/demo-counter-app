@@ -74,9 +74,9 @@ pipeline{
             stage('upload war file to nexus'){
                 steps{
                     script{
-                        def readPomVersion = readMavenPom file: 'pom.xml'
+                      //  def readPomVersion = readMavenPom file: 'pom.xml'
                         
-                        def nexusRepo = readPomVersion.version.endsWith("SNAPSHOT") ? "nexux-snapshot" : "nexux-release"
+                       // def nexusRepo = readPomVersion.version.endsWith("SNAPSHOT") ? "nexux-snapshot" : "nexux-release"
                         
                         nexusArtifactUploader artifacts:
                             [
@@ -91,22 +91,23 @@ pipeline{
                             nexusUrl: '13.233.83.240:8081',
                             nexusVersion: 'nexus3',
                             protocol: 'http',
-                            repository: nexusRepo,
-                            version: "${readPomVersion.version}"
+                            repository: 'nexus-release',
+                            version: '1.0.0'
+                            //version: "${readPomVersion.version}"
                     }
                 }
     
             }
-            stage('Build Docker Image'){
-                steps{
-                    script{ 
-                        sh 'docker image build -t $JOB_NAME:v1.$BUILD_ID .'
-                        sh 'docker image --tag $JOB_NAME:v1.$BUILD_ID raviteja2/$JOB_NAME:v1.$BUILD_ID'
-                        sh 'docker image --tag $JOB_NAME:v1.$BUILD_ID raviteja2/$JOB_NAME:latest'
-                    }
-                }
+           // stage('Build Docker Image'){
+           //     steps{
+             //       script{ 
+               //         sh 'docker image build -t $JOB_NAME:v1.$BUILD_ID .'
+                 //       sh 'docker image --tag $JOB_NAME:v1.$BUILD_ID raviteja2/$JOB_NAME:v1.$BUILD_ID'
+                   //     sh 'docker image --tag $JOB_NAME:v1.$BUILD_ID raviteja2/$JOB_NAME:latest'
+                  //  }
+             //   }
                 
-            }
+         //   }
 }
     
 }
