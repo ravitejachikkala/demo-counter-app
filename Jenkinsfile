@@ -97,12 +97,12 @@ pipeline{
                 }
     
             }
-            stage('Docker Image Build'){
+            stage('Build Docker Image'){
                 steps{
                     script{ 
-                        sh 'docker image build -t $JOB_NAME:v1.$BUILD_ID .'
-                        sh 'docker image --tag $JOB_NAME:v1.$BUILD_ID raviteja2/$JOB_NAME:v1.$BUILD_ID'
-                        sh 'docker image --tag $JOB_NAME:v1.$BUILD_ID raviteja2/$JOB_NAME:latest'
+                        sh 'docker build -t $JOB_NAME:v1.$BUILD_ID .'
+                        //sh 'docker image --tag $JOB_NAME:v1.$BUILD_ID raviteja2/$JOB_NAME:v1.$BUILD_ID'
+                        //sh 'docker image --tag $JOB_NAME:v1.$BUILD_ID raviteja2/$JOB_NAME:latest'
                     }
                 }
                 
