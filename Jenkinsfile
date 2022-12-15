@@ -3,7 +3,7 @@ pipeline{
     agent any 
     environment {
         PATH = "/opt/maven/bin/:$PATH"
-        DOCKERHUB_CREDENTIALS = credentials('docker-hub-nexus')
+      //  DOCKERHUB_CREDENTIALS = credentials('docker-hub-nexus')
     }    
     stages {
         
@@ -102,7 +102,7 @@ pipeline{
             stage('Build Docker Image'){
                 steps{
                     script{ 
-                        sh 'docker image build -t $JOB_NAME:$BUILD_ID .'
+                        sh 'docker image build -t $JOB_NAME .'
                        // sh 'docker image tag $JOB_NAME:v1.$BUILD_ID raviteja2/$JOB_NAME:v1.$BUILD_ID'
                        // sh 'docker image tag $JOB_NAME:v1.$BUILD_ID raviteja2/$JOB_NAME:latest'
                     }
