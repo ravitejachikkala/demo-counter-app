@@ -102,9 +102,9 @@ pipeline{
             stage('Build Docker Image'){
                 steps{
                     script{ 
-                        sh 'docker image build -t $JOB_NAME .'
-                       // sh 'docker image tag $JOB_NAME:v1.$BUILD_ID raviteja2/$JOB_NAME:v1.$BUILD_ID'
-                       // sh 'docker image tag $JOB_NAME:v1.$BUILD_ID raviteja2/$JOB_NAME:latest'
+                        sh 'docker image build -t $JOB_NAME:v1.$BUILD_ID .'
+                        sh 'docker image tag $JOB_NAME:v1.$BUILD_ID raviteja2/$JOB_NAME:v1.$BUILD_ID'
+                        sh 'docker image tag $JOB_NAME:v1.$BUILD_ID raviteja2/$JOB_NAME:latest'
                     }
                 }
                 
@@ -114,8 +114,11 @@ pipeline{
             steps{
                 script{
                     
-                   sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                   sh 'docker push $JOB_NAME:v1:$BUILD_ID'
+                   withCredentials([string(credentialsId: 'docker_creds', variable: 'docker_hub_cred')]) {
+                       sh 'docker login -u raviteja2 -p $(docker_hub_cred)'
+                       sh 'docker image push raviteja2/$JOB_NAME:v1.$BUILD_ID'
+                       sh 'docker image push raviteja2/$JOB_NAME:latest'
+                 }
                 }
             }
         
